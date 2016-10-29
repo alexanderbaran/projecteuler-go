@@ -166,3 +166,49 @@ func divisorsSum(n int) int {
 	}
 	return sum
 }
+
+func isPalindromeFromString(s string) bool {
+	i, j := 0, len(s)-1
+	for {
+		if i > j {
+			break
+		}
+		if s[i] != s[j] {
+			return false
+		}
+		i++
+		j--
+	}
+	return true
+}
+
+func reverseString(s string) string {
+	n := len(s)
+	runes := make([]rune, n)
+	for _, rune := range s {
+		n--
+		runes[n] = rune
+	}
+	return string(runes[n:])
+}
+
+func hasDistinctDigitsFromString(s string) bool {
+	m := map[int32]bool{}
+	for _, v := range s {
+		m[v] = true
+	}
+	return len(m) == len(s)
+}
+
+func hasDistinctDigits(n int) bool {
+	length := digitLength(n)
+	m := map[int]bool{}
+	for ; n > 0; n = n / 10 {
+		m[n%10] = true
+	}
+	return len(m) == length
+}
+
+func digitLength(x int) int {
+	return int(math.Log10(float64(x)) + 1)
+}
