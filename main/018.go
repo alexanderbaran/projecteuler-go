@@ -31,5 +31,16 @@ func main() {
 	}
 
 	adj := make([][]edge, len(ints))
-	_ = adj
+	ints = ints[1:len(ints)]
+
+	test := 0
+	incr := 1
+	for i := 0; i <= len(adj); i++ {
+		if i > test {
+			test += incr
+			incr++
+		}
+		e1 := edge{to: i + 1}
+		adj[i]
+	}
 }
