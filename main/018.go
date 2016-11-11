@@ -9,8 +9,8 @@ import (
 )
 
 type edge struct {
-	to     int
 	weight int
+	to     int
 }
 
 func main() {
@@ -31,7 +31,6 @@ func main() {
 	}
 
 	adj := make([][]edge, len(ints))
-
 	test := 0
 	incr := 1
 	for i := 0; i <= len(adj); {
@@ -54,35 +53,52 @@ func main() {
 	// spew.Dump(adj)
 
 	// Dijkstra (longest path instead of shortest path)
-	Q := map[int]bool{}
+	notKnown := map[int]bool{}
 	dist := make([]int, len(ints))
 	prev := make([]int, len(ints))
 	for i := 0; i < len(ints); i++ {
 		dist[i] = -1
 		prev[i] = -1 // Undefined
-		Q[i] = true
+		notKnown[i] = false
 	}
-	dist[0] = 0
-	// spew.Dump(Q)
+	dist[0] = ints[0]
+	// dist[2] = 3
+	// delete(notKnown, 2)
+	// fmt.Println(maxOfNotKnown(dist, notKnown))
 
-	// for len(Q) > 0 {
-	// 	u := maxI(dist)
-	// 	delete(Q, u)
+	for len(notKnown) > 0 {
+		u := maxOfNotKnown(dist, notKnown)
+		delete(notKnown, u)
 
-	// 	// for _, v := range adj[u] {
-	// 	// 	fmt.Println(v)
-	// 	// }
-	// }
-}
-
-func maxI(a []int) int {
-	maxV := -1
-	maxI := 0
-	for i, v := range a {
-		if v > maxV {
-			maxV = v
-			maxI = i
+		for _, edge := range adj[u] {
+			// fmt.Println(u, edge)
+			// if _, ok := notKnown[edge.to]; ok {
+			alt := dist[u] + edge.weight
+			if alt > dist[edge.to] {
+				dist[edge.to] = alt
+				prev[edge.to] = u
+			}
+			// }
 		}
 	}
-	return maxI
+
+	max := 0
+	for _, v := range dist {
+		if v > max {
+			max = v
+		}
+	}
+	fmt.Println(dist)
+}
+
+func maxOfNotKnown(dist []int, notKnown map[int]bool) int {
+	maxDist := -1
+	maxOfNotKnown := -1
+	for vertex := range notKnown {
+		if dist[vertex] > maxDist {
+			maxDist = dist[vertex]
+			maxOfNotKnown = vertex
+		}
+	}
+	return maxOfNotKnown
 }
