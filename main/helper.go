@@ -212,3 +212,9 @@ func hasDistinctDigits(n int) bool {
 func digitLength(x int) int {
 	return int(math.Log10(float64(x)) + 1)
 }
+
+func print2DIntSlice(a [][]int) {
+	for _, v := range a {
+		fmt.Println(v)
+	}
+}
