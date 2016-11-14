@@ -218,3 +218,20 @@ func print2DIntSlice(a [][]int) {
 		fmt.Println(v)
 	}
 }
+
+func splitInt(n int) []int {
+	a := make([]int, digitLength(n))
+	for i := len(a) - 1; n > 0; i-- {
+		a[i] = n % 10
+		n = n / 10
+	}
+	return a
+}
+
+func joinInts(a []int) int {
+	n := 0
+	for i := 0; i < len(a); i++ {
+		n = 10*n + a[i]
+	}
+	return n
+}
